@@ -1,0 +1,7 @@
+Provides a quick way (swapping terminal profiles) of recognizing which computer you're currently ssh'd into when using gnome-terminal.
+
+Unfortunately, there's no easy way to do this, since you can't change gnome-terminal colors from within gnome-terminal itself. Instead, we need to simulate keypresses to change the terminal profile. Consequently, this depends on xdotool.
+
+To use, set up a default profile use, then a profile for production servers and a profile for testing servers. Adjust the key strokes as necessary. Make this program executable, and put the following in your .bash_rc:
+
+alias ssh='/path/to/this/file/colorizessh'

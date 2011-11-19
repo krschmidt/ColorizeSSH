@@ -1,0 +1,33 @@
+#!/bin/bash
+# This script sets background colors when ssh to something
+# Sadly, because this seems to pretty much be impossible, this is going to feel super hacky.
+# To set it up, you need to have profiles on gnome-terminal configured in this order:
+# Default
+# Production
+# Testing
+# If ever window focus is needed:
+#    WID=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)"| awk '{print $5}')
+#    xdotool windowfocus $WID
+
+
+function make_normal(){
+    xdotool key --delay 6 alt+t Right Return    
+}
+
+#catch ctrl-c
+trap make_normal SIGINT
+
+#figure out where we're going
+destination=`echo "$1" | sed 's/.*@//g' `
+
+case $destination in
+'production.example.com')
+xdotool key --delay 6 alt+t Right Down Return
+;;
+'test.example.com')
+xdotool key --delay 6 alt+t Right Down Down Return
+esac
+#no need for any other cases, since we're not going to change the profile
+ssh $@
+# when that's over, just hop on back to normal.
+make_normal
